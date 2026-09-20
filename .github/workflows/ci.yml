@@ -1,0 +1,29 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  version:
+    name: Version check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # tags are needed to compare against released versions
+      - run: scripts/check-version.sh
+
+  build:
+    name: Build and test (nix)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: cachix/install-nix-action@v31
+      - name: Check the flake
+        run: nix flake check --no-build
+      - name: Build the library, the plugin and the cross targets
+        # Unit tests and the CLAP/VST3 smoke tests run inside these builds.
+        run: nix build --print-build-logs .#pbe-dsp .#pbe-dsp-arm-none-eabi .#pbe-plugin .#pbe-plugin-x86_64-windows

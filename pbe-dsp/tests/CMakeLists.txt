@@ -1,0 +1,15 @@
+function(pbe_add_test name)
+  add_executable(${name} ${name}.c)
+  target_link_libraries(${name} PRIVATE pbe-dsp Unity::Unity)
+  add_test(NAME ${name} COMMAND ${name})
+endfunction()
+
+pbe_add_test(cross-over-test)
+pbe_add_test(full-wave-integrator-test)
+
+add_executable(concat-columns-test concat-columns-test.c)
+target_link_libraries(concat-columns-test PRIVATE pbe-dsp Unity::Unity)
+add_test(NAME concat-columns-test COMMAND concat-columns-test)
+pbe_add_test(band-pass-test)
+pbe_add_test(select-columns-test)
+pbe_add_test(pbe-dsp-test)

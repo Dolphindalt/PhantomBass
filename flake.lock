@@ -1,0 +1,78 @@
+{
+  "nodes": {
+    "cplug": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1763505311,
+        "narHash": "sha256-K8NBORKJYcKK9J7mf/9iMBFAfP4qVXQePgvBx3G9BaM=",
+        "owner": "Tremus",
+        "repo": "CPLUG",
+        "rev": "b8b964b805fae6728203a05782d90bb4d39f6696",
+        "type": "github"
+      },
+      "original": {
+        "owner": "Tremus",
+        "repo": "CPLUG",
+        "type": "github"
+      }
+    },
+    "nanovg": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1771507772,
+        "narHash": "sha256-3KjhvekXaEP1nyn2REvztbjvgncW4hgjCUdoWxBRXpU=",
+        "owner": "memononen",
+        "repo": "nanovg",
+        "rev": "ce3bf745eb2d2dbc14a50bf2446783f691ac4353",
+        "type": "github"
+      },
+      "original": {
+        "owner": "memononen",
+        "repo": "nanovg",
+        "type": "github"
+      }
+    },
+    "nixpkgs": {
+      "locked": {
+        "lastModified": 1789344334,
+        "narHash": "sha256-vdhpDJ3Lr24lkZ+fDCjmBRRtw9/vcSzkqGJOJyF5h2U=",
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "c3eea5b2156db11c7eeeada3dc737711255b253e",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nixos",
+        "ref": "nixos-26.05",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "pugl": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1776266980,
+        "narHash": "sha256-jkYu5XGyGHGL92dzT/u5zUJM9uBsuAr0BqBioIbbeds=",
+        "owner": "lv2",
+        "repo": "pugl",
+        "rev": "b7637149ebe53124e5be90559e02a0185bbcbd73",
+        "type": "github"
+      },
+      "original": {
+        "owner": "lv2",
+        "repo": "pugl",
+        "type": "github"
+      }
+    },
+    "root": {
+      "inputs": {
+        "cplug": "cplug",
+        "nanovg": "nanovg",
+        "nixpkgs": "nixpkgs",
+        "pugl": "pugl"
+      }
+    }
+  },
+  "root": "root",
+  "version": 7
+}

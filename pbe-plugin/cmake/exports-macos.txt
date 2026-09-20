@@ -1,0 +1,4 @@
+_clap_entry
+_GetPluginFactory
+_bundleEntry
+_bundleExit

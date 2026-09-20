@@ -1,0 +1,48 @@
+name: Release
+
+# Manual only. Builds the release zips, then tags v<VERSION> and publishes a
+# GitHub Release with the CHANGELOG.md entry as notes. Refuses to run unless
+# VERSION was bumped past the latest tag and CHANGELOG.md has an entry.
+
+on:
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: Build and upload the zips as a workflow artifact without tagging or publishing
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    name: Build and publish
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Check the version and changelog
+        id: version
+        run: |
+          scripts/check-version.sh --release
+          echo "version=$(tr -d '[:space:]' < VERSION)" >> "$GITHUB_OUTPUT"
+      - uses: cachix/install-nix-action@v31
+      - name: Build and package
+        run: scripts/package-release.sh
+      - uses: actions/upload-artifact@v4
+        with:
+          name: PhantomBass-${{ steps.version.outputs.version }}
+          path: dist/*.zip
+      - name: Tag and publish
+        if: ${{ !inputs.dry_run }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+          VERSION: ${{ steps.version.outputs.version }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git tag -a "v$VERSION" -m "Phantom Bass $VERSION"
+          git push origin "v$VERSION"
+          gh release create "v$VERSION" dist/*.zip --title "Phantom Bass $VERSION" --notes-file dist/notes.md

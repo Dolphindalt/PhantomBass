@@ -1,0 +1,23 @@
+# CMake build directories
+build/
+build-*/
+cmake-build-*/
+CMakeFiles/
+CMakeCache.txt
+compile_commands.json
+
+# Nix
+result
+result-*
+.direnv/
+
+# Editor / tooling
+.cache/
+.clangd/
+.vscode/
+.idea/
+*.swp
+*~
+
+# Release artifacts
+dist/

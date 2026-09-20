@@ -1,0 +1,114 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 52 1324 250" width="1324" height="250" role="img" aria-labelledby="title desc">
+  <title id="title">Phantom Bass signal chain</title>
+  <desc id="desc">The interleaved stereo input is split into left and right columns and each channel goes through a crossover at the speaker cutoff. The highpass parts continue to the output. The lowpass parts are averaged to mono, decimated by four, run through a full-wave integrator that generates harmonics, bandpass filtered between the speaker cutoff and the harmonics cutoff, scaled by the gain, interpolated back up by four and smoothed, then added to both channels. The sums are clipped to full scale and concatenated back into interleaved stereo.</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#c8ccd2"/>
+    </marker>
+    <marker id="arrow-accent" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#f29e4c"/>
+    </marker>
+  </defs>
+  <style>
+    text { font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; fill: #d8dbe0; text-anchor: middle; }
+    .dim { fill: #848a96; }
+    .accent { fill: #f29e4c; }
+    .label { font-size: 13px; }
+    .note { font-size: 12px; font-style: italic; }
+    .block-title { font-size: 15px; font-weight: 600; }
+    .block-sub { font-size: 11.5px; }
+    .block { fill: #26292e; stroke: #484e5a; stroke-width: 1.5; }
+    .block-nld { fill: #26292e; stroke: #f29e4c; stroke-width: 1.5; }
+    .wire { fill: none; stroke: #c8ccd2; stroke-width: 1.6; }
+    .wire-accent { fill: none; stroke: #f29e4c; stroke-width: 2; }
+    .node { fill: #1b1d22; stroke: #c8ccd2; stroke-width: 1.6; }
+    .op { font-size: 17px; dominant-baseline: central; }
+    .start { text-anchor: start; }
+    .end { text-anchor: end; }
+  </style>
+
+  <rect y="52" width="1324" height="250" rx="14" fill="#1b1d22"/>
+
+  <!-- Stereo in: one interleaved stream, split into two columns -->
+  <text x="24" y="84" class="label dim start">stereo in</text>
+  <line x1="24" y1="100" x2="80" y2="100" class="wire" marker-end="url(#arrow)"/>
+  <rect x="82" y="70" width="136" height="60" rx="8" class="block"/>
+  <text x="150" y="97" class="block-title">Select columns</text>
+  <text x="150" y="116" class="block-sub dim">interleaved → L, R</text>
+  <line x1="218" y1="95" x2="244" y2="95" class="wire" marker-end="url(#arrow)"/>
+  <line x1="218" y1="105" x2="244" y2="105" class="wire" marker-end="url(#arrow)"/>
+
+  <!-- Crossover, one per channel -->
+  <rect x="246" y="64" width="154" height="72" rx="8" class="block"/>
+  <text x="323" y="88" class="block-title">Crossover</text>
+  <text x="323" y="106" class="block-sub dim">per channel · LR2, 12 dB/oct</text>
+  <text x="323" y="124" class="block-sub accent">fc = Speaker cutoff</text>
+
+  <!-- Highpass L, R straight to the output adder -->
+  <line x1="400" y1="95" x2="1001" y2="95" class="wire" marker-end="url(#arrow)"/>
+  <line x1="400" y1="105" x2="1001" y2="105" class="wire" marker-end="url(#arrow)"/>
+  <text x="700" y="82" class="note dim">highpass L, R: nothing below fc reaches the speaker</text>
+
+  <!-- Lowpass L, R down into the mono average -->
+  <polyline points="311,136 311,238 357,238" class="wire"/>
+  <polyline points="323,136 323,226 357,226" class="wire"/>
+  <text x="332" y="184" class="label dim start">lowpass L, R</text>
+
+  <circle cx="374" cy="232" r="15" class="node"/>
+  <text x="374" y="232" class="op">+</text>
+  <text x="374" y="268" class="block-sub dim">(L+R) / 2</text>
+
+  <!-- Decimated enhancement chain (mono, accent) -->
+  <line x1="389" y1="232" x2="410" y2="232" class="wire-accent" marker-end="url(#arrow-accent)"/>
+
+  <rect x="412" y="206" width="58" height="52" rx="8" class="block"/>
+  <text x="441" y="229" class="block-title">↓4</text>
+  <text x="441" y="247" class="block-sub dim">decimate</text>
+
+  <line x1="470" y1="232" x2="488" y2="232" class="wire-accent" marker-end="url(#arrow-accent)"/>
+
+  <rect x="490" y="204" width="196" height="56" rx="8" class="block-nld"/>
+  <text x="588" y="228" class="block-title">Full-wave integrator</text>
+  <text x="588" y="248" class="block-sub dim">accumulates |u|, resets each period</text>
+
+  <line x1="686" y1="232" x2="704" y2="232" class="wire-accent" marker-end="url(#arrow-accent)"/>
+
+  <rect x="706" y="204" width="112" height="56" rx="8" class="block"/>
+  <text x="762" y="228" class="block-title">Bandpass</text>
+  <text x="762" y="248" class="block-sub accent">fc to Harmonics</text>
+
+  <line x1="818" y1="232" x2="836" y2="232" class="wire-accent" marker-end="url(#arrow-accent)"/>
+
+  <polygon points="838,214 838,250 872,232" class="block-nld"/>
+  <text x="855" y="272" class="block-sub dim">Gain</text>
+
+  <line x1="872" y1="232" x2="890" y2="232" class="wire-accent" marker-end="url(#arrow-accent)"/>
+
+  <rect x="892" y="204" width="108" height="56" rx="8" class="block"/>
+  <text x="946" y="228" class="block-title">↑4</text>
+  <text x="946" y="248" class="block-sub dim">interpolate + smooth</text>
+
+  <polyline points="1000,232 1018,232 1018,117" class="wire-accent" marker-end="url(#arrow-accent)"/>
+  <text x="700" y="292" class="note dim">harmonics of the removed bass carry its pitch, in the band the speaker can play</text>
+
+  <!-- Mix into both channels, clip, re-interleave -->
+  <circle cx="1018" cy="100" r="15" class="node"/>
+  <text x="1018" y="100" class="op">+</text>
+  <text x="1036" y="142" class="block-sub dim start">added to both channels</text>
+  <line x1="1033" y1="95" x2="1052" y2="95" class="wire" marker-end="url(#arrow)"/>
+  <line x1="1033" y1="105" x2="1052" y2="105" class="wire" marker-end="url(#arrow)"/>
+
+  <rect x="1054" y="74" width="58" height="52" rx="8" class="block"/>
+  <text x="1083" y="97" class="block-title">Clip</text>
+  <text x="1083" y="115" class="block-sub dim">±1.0</text>
+
+  <line x1="1112" y1="95" x2="1130" y2="95" class="wire" marker-end="url(#arrow)"/>
+  <line x1="1112" y1="105" x2="1130" y2="105" class="wire" marker-end="url(#arrow)"/>
+
+  <rect x="1132" y="70" width="136" height="60" rx="8" class="block"/>
+  <text x="1200" y="97" class="block-title">Concat columns</text>
+  <text x="1200" y="116" class="block-sub dim">L, R → interleaved</text>
+
+  <line x1="1268" y1="100" x2="1312" y2="100" class="wire" marker-end="url(#arrow)"/>
+  <text x="1312" y="84" class="label dim end">stereo out</text>
+</svg>

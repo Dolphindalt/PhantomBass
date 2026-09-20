@@ -1,0 +1,11 @@
+/* Only the plugin-format entry points leave the module. Everything else
+   (pugl, NanoVG, pbe-dsp, our own code) stays hidden so it can never clash
+   with another plugin's copy in the same host process. */
+{
+  global:
+    clap_entry;
+    GetPluginFactory;
+    ModuleEntry;
+    ModuleExit;
+  local: *;
+};
